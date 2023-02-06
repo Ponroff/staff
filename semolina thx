@@ -1,0 +1,30 @@
+import json                               
+
+with open('D:\\Work\\прога\\training\\log_100.json') as file:
+  lst = json.load(file)
+  dict_ip = {}
+for i in lst:
+  if i['ip'] not in dict_ip:
+    dict_ip[i['ip']] = 1
+  else:
+    dict_ip[i['ip']] += 1
+
+print(f'\n{dict_ip}\n')
+
+once_ip = 0
+summ_value = 0
+summ_top3_value = 0
+for key,value in dict_ip.items():
+  summ_value += value
+  if value == 1:
+    once_ip += 1
+
+for i in range(1,4):
+  max_number = max(dict_ip.values())
+  index_max_number = list(dict_ip.values()).index(max_number)
+  summ_top3_value += max_number
+  ip = list(dict_ip)[index_max_number]
+  print(f'top {i} ip = {ip} c количеством заходов = {max_number} ,вклад по % = {max_number/summ_value * 100}')
+  del dict_ip[ip]
+print(f'\nОбщее колво заходов с топ 3 айпи составило {summ_top3_value/summ_value * 100}%\n') 
+print(f'Число уникальных IP с которых заходили 1 раз = {once_ip}')
